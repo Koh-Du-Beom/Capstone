@@ -1,0 +1,61 @@
+.outlet_container{
+	width: 100%;
+}
+
+.big_title{
+  margin-bottom: 20px; 
+}
+
+.input {
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #f0f0f0;
+  outline: none;
+  width: 100%; 
+	height: 50px;
+  margin: 10px 0;
+}
+
+.input:focus {
+  border-bottom: 2px solid #191919; 
+}
+
+.content_title{
+	padding: 10px;
+	margin: 0;
+}
+
+.message {
+  display: none; 
+  color: #777; 
+  font-size: 0.8em;
+  margin-top: 5px;
+	width: 100%;
+	text-align: left;
+}
+
+.error{
+	color: #e65f32; 
+	padding-left: 10px;
+	font-size: 0.9em;
+}
+
+
+
+
+.signUp_button {
+  padding: 15px 30px;
+  background-color: #fad312; 
+  color: #191919;
+  border: none;
+  border-radius: 5px; 
+  margin-top: 20px;
+  cursor: pointer; 
+  width: 100%; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .2); /* 버튼에 그림자 효과 추가 */
+}
+
+.signUp_button:hover{
+	background-color: #d0b134;
+}
+

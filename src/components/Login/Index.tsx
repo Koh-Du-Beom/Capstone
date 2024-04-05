@@ -26,7 +26,7 @@ const Login : React.FC = () => {
 		<form className={classes.outlet_container} onSubmit={handleSubmit}>
 			<div className={classes.wrapper}>
 				<input
-					id='email'
+					id='login_email'
 					className={classes.input}
 					type='text'
 					placeholder='이메일을 입력해주세요'
@@ -35,7 +35,7 @@ const Login : React.FC = () => {
 				/>
 				{focused === 'email' && <span className={classes.message}><span className={classes.red}>TIP</span>이메일 아이디만 입력해주세요!</span>}
 				<input
-					id='password'
+					id='login_password'
 					className={classes.input}
 					type='password'
 					placeholder='비밀번호를 입력해주세요'
