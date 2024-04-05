@@ -1,4 +1,4 @@
-import classes from './Divider.module.css'
+import classes from './Divider.module.css';
 
 const Divider : React.FC = () => {
 	return (
