@@ -1,25 +1,6 @@
 
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 40vw;
-  margin: 0 auto;
-  border: 1px solid rgba(0, 0, 0, .12);
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .1); 
-	overflow-x : hidden
-}
-
-
-
-@media (max-width: 1000px) {
-	.container{
-		width: 80vw;
-	}
-
+.outlet_container{
+	width: 100%;
 }
 
 .title{
@@ -80,7 +61,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2); /* 버튼에 그림자 효과 추가 */
 }
 
-.button:hover{
+.login_button:hover{
 	background-color: #d0b134;
 }
 
@@ -102,6 +83,11 @@
 .user_help .signUp{
 	position: absolute;
 	left: 10px;
+	cursor: pointer;
+}
+
+.signUp h4{
+	font-weight: 400;
 }
 
 .user_help .finds {
@@ -112,7 +98,12 @@
 	list-style-type: none;
 }
 
+.find{
+	cursor: pointer;
+}
+
 .find h4 {
   margin: 0; 
   padding: 0 10px; 
+	font-weight: 400;
 }

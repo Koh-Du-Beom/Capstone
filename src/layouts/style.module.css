@@ -1,0 +1,30 @@
+.container{
+	padding: 5vw;
+}
+
+.children {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40vw;
+  margin: 0 auto;
+  border: 1px solid rgba(0, 0, 0, .12);
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1); 
+	height: 40vh;
+}
+
+
+
+@media (max-width: 1000px) {
+	.children{
+		width: 80vw;
+	}
+
+}
+
+.title{
+  text-align: center;
+  margin-bottom: 20px; 
+}
