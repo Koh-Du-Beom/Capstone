@@ -103,8 +103,12 @@ const SignUp :React.FC = () => {
     }
   }, [errors]);
 
+	const handleSubmit = (event : React.FormEvent) => {
+		event.preventDefault();
+	}
+
 	return (
-		<form className={classes.outlet_container}>
+		<form className={classes.outlet_container} onSubmit={handleSubmit}>
 			<h1 className={classes.big_title}>회원가입</h1>
 			
 			<div className={classes.contents}>
@@ -145,8 +149,8 @@ const SignUp :React.FC = () => {
 					<h3 className={classes.content_title}>비밀번호 확인</h3>
 					<input 			
 						ref={passwordCheckRef}
-						id='signup_password_check'
-						name='password_check'
+						id='signup_passwordCheck'
+						name='passwordCheck'
 						className={classes.input}
 						type='password'
 						placeholder='비밀번호를 다시 입력해주세요.'		
@@ -165,7 +169,7 @@ const SignUp :React.FC = () => {
 						name='phoneNumber'
 						className={classes.input}
 						type='text'
-						placeholder='전화번호를 입력해주세요.'
+						placeholder='전화번호를 입력해주세요(예 : 010-1234-5678)'
 						value={signUpForm.phoneNumber}		
 						onChange={handleChange}	
 						onBlur={handlePhoneNumberBlur}		
