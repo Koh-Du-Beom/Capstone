@@ -1,4 +1,4 @@
-import RoomSelector from "../components/RoomSelector";
+import RoomSelector from "../components/RoomSelector/RoomSelector";
 
 const RoomSelectPage = () => {
 	return (

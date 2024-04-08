@@ -1,10 +1,10 @@
 
 import axios from 'axios';
-import Divider from '../Divider/Index';
+import Divider from '../Divider/Divider';
 import classes from './style.module.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LoginError from './LoginError';
+import LoginError from './LoginError/LoginError';
 
 const Login : React.FC = () => {
 	const [focused, setFocused] = useState<string | null>(null);
@@ -83,7 +83,7 @@ const Login : React.FC = () => {
 
 			<button 
 				className={classes.login_button}
-				onClick={() => {}}
+				onClick={handleSubmit}
 			>
 				로그인
 			</button>

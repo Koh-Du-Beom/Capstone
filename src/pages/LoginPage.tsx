@@ -1,4 +1,4 @@
-import Login from "../components/Login/Index"
+import Login from "../components/Login/Login"
 
 const LoginPage : React.FC = () => {
 	return (
