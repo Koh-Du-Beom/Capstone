@@ -1,0 +1,39 @@
+/* DeviceCheck.module.css */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.connectionInfo {
+  border-top: 2px solid #ddd;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.deviceSelector {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+	cursor: pointer;
+}
+
+.deviceSelector:hover{
+	border: 2px solid #007bff;
+}
+
+.deviceIcon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.iconWithText {
+  display: flex;
+  align-items: center;
+}

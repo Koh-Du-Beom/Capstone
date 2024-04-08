@@ -49,7 +49,7 @@
   color: #191919;
   border: none;
   border-radius: 5px; 
-  margin-top: 20px;
+  margin: 20px 0;
   cursor: pointer; 
   width: 100%; 
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2); /* 버튼에 그림자 효과 추가 */
@@ -59,3 +59,14 @@
 	background-color: #d0b134;
 }
 
+
+
+.right_align{
+	text-align: right;
+	position: relative;
+}
+
+.link_login{
+	cursor: pointer;
+  text-decoration: underline;
+}

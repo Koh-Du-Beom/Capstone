@@ -37,6 +37,7 @@ const DeviceCheck: React.FC = () => {
 
 	return (
 		<div className={classes.wrapper}>
+			<div>유저정보</div>
 			<div className={classes.connectionInfo}>
 				{/* Video device selector */}
 				<select value={selectedVideoDevice} onChange={handleVideoDeviceChange} className={classes.deviceSelector}>

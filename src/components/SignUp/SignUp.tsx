@@ -202,7 +202,10 @@ const SignUp :React.FC = () => {
 			>
 				회원가입 완료하기
 			</button>
-
+			<div className={classes.right_align}>
+				<a className={classes.link_login} onClick={()=>navigate('/login')}>이미 아이디가 있으신가요?</a>
+			</div>
+			
 		</form>
 	)
 };

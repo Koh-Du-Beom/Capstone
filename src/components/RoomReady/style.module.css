@@ -1,0 +1,32 @@
+/* style.module.css */
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+	padding: 10vw;
+}
+
+
+.checkContainer{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	margin: 20px;
+}
+
+.joinSessionButton {
+  width: 100%;
+  padding: 5px 10px;
+  background: #fad312; 
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.joinSessionButton:hover{
+	background-color: #d0b134;
+}

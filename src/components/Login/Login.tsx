@@ -8,13 +8,10 @@ import LoginError from './LoginError/LoginError';
 
 const Login : React.FC = () => {
 	const [focused, setFocused] = useState<string | null>(null);
-
 	const [email, setEmail] = useState<string>();
 	const [passWord, setPassWord] = useState<string>();
-
 	const [isLoginError, setIsLoginError] = useState<boolean>(false);
  
-	
 	const navigate = useNavigate();
 
 	const handleFocus = (id: string) => {

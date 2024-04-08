@@ -30,12 +30,12 @@ const router = createBrowserRouter([
 				path: '/roomSelect',
 				element: <RoomSelectPage/>
 			},
-			{
-				path: 'roomReady',
-				element: <RoomReadyPage/>
-			}
 		]
 	},
+	{
+		path: 'roomReady',
+		element: <RoomReadyPage/>
+	}
 	
 ])
 
