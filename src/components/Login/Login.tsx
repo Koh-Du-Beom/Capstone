@@ -13,6 +13,9 @@ const Login : React.FC = () => {
 	const [passWord, setPassWord] = useState<string>();
 
 	const [isLoginError, setIsLoginError] = useState<boolean>(false);
+ 
+	
+	const navigate = useNavigate();
 
 	const handleFocus = (id: string) => {
 		setFocused(id);
@@ -32,7 +35,7 @@ const Login : React.FC = () => {
 			const response = await axios.post('endPoint_url', body, {
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : 'Bearer ${}',
+					'Authorization' : 'Bearer ${}', //수정필요
 				}
 			})
 
@@ -40,16 +43,18 @@ const Login : React.FC = () => {
 			localStorage.setItem('userToken', token);
 
 			setIsLoginError(false); // 에러 해제
+			navigate('/roomSelect'); // 성공 시 방 선택 페이지로 redirection
 			//추가 구현
+			
 
 		}catch(error){
 			console.log("Login failed : ", error);
 			setIsLoginError(true);
+			navigate('/roomSelect'); // 일단은 추가해뒀는데, 원래는 되면 안됨.
 		}
 		
 	}
 
-	const navigate = useNavigate();
 
 	return (
 		<form className={classes.outlet_container} onSubmit={handleSubmit}>

@@ -36,7 +36,7 @@ const CameraCheck: React.FC = () => {
 			<div>
 				<video ref={videoRef} autoPlay style={Styles.Video} />
 				<button onClick={() => startOrStop()}>{playing ? 'Stop' : 'Start'} </button>
-			</div >
+			</div>
 		</>
 	);
 };
