@@ -55,7 +55,11 @@ const RoomSelector: React.FC = () => {
 						value={roomName}
 						onChange={(e) => setRoomName(e.target.value)}
 					/>
-					<button className={classes.nameGenButton} onClick={randomGenerate}>
+					<button 
+						className={classes.nameGenButton} 
+						type='button'
+						onClick={randomGenerate}
+					>
 						{/* <img src={refresh} className={classes.icon} alt="refresh"/> */}
 						새로고침 버튼
 					</button>

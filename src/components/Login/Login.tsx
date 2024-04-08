@@ -27,9 +27,7 @@ const Login : React.FC = () => {
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
-		const body = JSON.stringify({ email, passWord });
-		console.log(navigator.userAgent);
-		
+		const body = JSON.stringify({ email, passWord });	
 		
 		try {
 			const response = await axios.post('endPoint_url', body, {

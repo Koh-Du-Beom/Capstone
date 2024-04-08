@@ -1,6 +1,8 @@
 import classes from './style.module.css';
 import { isCorrectEmail, isCorrectPassWord, isCorrectPhoneNumber } from '../../util/regExp';
 import { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 interface FormState {
   email: string;
@@ -38,73 +40,92 @@ const SignUp :React.FC = () => {
 	}
 
 	const validateEmail = () => {
-    const isValid = isCorrectEmail(signUpForm.email);
-    if (!isValid) {
-      setErrors(prev => ({ ...prev, email: '올바른 이메일 형식이 아닙니다.' }));
-    } else {
-      setErrors(prev => ({ ...prev, email: '' }));
-    }
-    return isValid;
+    return isCorrectEmail(signUpForm.email);
   };
 
 	const validatePassWord = () => {
-		const isValid = isCorrectPassWord(signUpForm.password);
-		if (!isValid){
-			setErrors(prev => ({ ...prev, password: '올바른 비밀번호 형식이 아닙니다.' }));
-		}else{
-			setErrors(prev => ({ ...prev, password: '' }));
-		}
-		return isValid;
+		return isCorrectPassWord(signUpForm.password);
 	}
 
 	const validatePassWordCheck = () => {
-		const isValid = signUpForm.password === signUpForm.passwordCheck;
-		if(!isValid){
-			setErrors(prev => ({ ...prev, passwordCheck: '이전의 비밀번호 입력과 다릅니다.' }));
-		}else{
-			setErrors(prev => ({ ...prev, passwordCheck: '' }));
-		}
-		return isValid;
+		return signUpForm.password === signUpForm.passwordCheck;
+		
 	}
 
 	const validatePhoneNumber = () => {
-		const isValid = isCorrectPhoneNumber(signUpForm.phoneNumber);
-		if (!isValid){
-			setErrors(prev => ({ ...prev, phoneNumber: '올바른 연락처 형식이 아닙니다.' }));
-		}else{
-			setErrors(prev => ({ ...prev, phoneNumber: '' }));
-		}
-		return isValid;
+		return isCorrectPhoneNumber(signUpForm.phoneNumber);
 	}
 
-	const handleBlur = (validator: () => boolean, ref: React.RefObject<HTMLInputElement>) => {
-    const isValid = validator();
-    if (!isValid) {
-      ref.current?.focus();
-    }
-  };
-	
-	const handleEmailBlur = () => handleBlur(validateEmail, emailRef);
-	const handlePasswordBlur = () => handleBlur(validatePassWord, passwordRef);
-	const handlePassWordCheckBlur = () => handleBlur(validatePassWordCheck, passwordCheckRef);
-	const handlePhoneNumberBlur = () => handleBlur(validatePhoneNumber, phoneNumberRef);
+	const navigate = useNavigate();
 
-
-
-	useEffect(() => {
-    if (errors.email && emailRef.current) {
-      emailRef.current.focus();
-    } else if (errors.password && passwordRef.current) {
-      passwordRef.current.focus();
-    } else if (errors.passwordCheck && passwordCheckRef.current) {
-      passwordCheckRef.current.focus();
-    } else if (errors.phoneNumber && phoneNumberRef.current) {
-      phoneNumberRef.current.focus();
-    }
-  }, [errors]);
-
-	const handleSubmit = (event : React.FormEvent) => {
+	const handleSubmit = async (event : React.FormEvent) => {
 		event.preventDefault();
+
+		const newErrors : ErrorState = {};
+
+		// 각 입력 필드의 유효성 검사 함수 실행
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassWord();
+    const isPasswordCheckValid = validatePassWordCheck();
+    const isPhoneNumberValid = validatePhoneNumber();
+
+    if (!isEmailValid) {
+			newErrors.email = '올바른 이메일 형식이 아닙니다.';
+    } 
+
+		if (!isPasswordValid) {
+			newErrors.password = '올바른 비밀번호 형식이 아닙니다.';
+		} 
+		
+		if (!isPasswordCheckValid) {
+			newErrors.passwordCheck = '이전의 비밀번호 입력과 다릅니다.';
+		}
+		
+		if (!isPhoneNumberValid) {
+			newErrors.phoneNumber = '올바른 연락처 형식이 아닙니다.';
+		} 
+
+		setErrors(newErrors);
+
+		if (newErrors.email) {
+			emailRef.current?.focus();
+			return;
+		}
+		
+		if (newErrors.password) {
+			passwordRef.current?.focus();
+			return;
+		}
+
+		if (newErrors.passwordCheck) {
+			passwordCheckRef.current?.focus();
+			return;
+		} 
+
+		if (newErrors.phoneNumber) {
+			phoneNumberRef.current?.focus();
+			return;
+		}
+
+		const body = JSON.stringify(signUpForm);
+		console.log(body);
+		
+		try{
+			const response = await axios.post('endpoint_url', body, {
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : 'Bearer ${}'
+				}
+			});
+			
+			navigate('/login'); // 성공 시 방 선택 페이지로 redirection
+		}
+		catch(error){
+			console.log("Login failed : ", error);
+			navigate('/login')
+			//추가 기능 구현
+		}
+		
 	}
 
 	return (
@@ -123,7 +144,6 @@ const SignUp :React.FC = () => {
 						placeholder='아이디 입력 (이메일 형식)'	
 						value={signUpForm.email}	
 						onChange={handleChange}	
-						onBlur={handleEmailBlur}
 					/>
 					{errors.email? <span className={classes.error}>{errors.email}</span> : ''}
 				</div>
@@ -139,8 +159,7 @@ const SignUp :React.FC = () => {
 						type='password'
 						placeholder='비밀번호 입력(영문자, 숫자, 특수문자 포함 8~15자)'
 						value={signUpForm.password}		
-						onChange={handleChange}	
-						onBlur={handlePasswordBlur}		
+						onChange={handleChange}		
 					/>
 					{errors.password? <span className={classes.error}>{errors.password}</span> : ''}
 				</div>
@@ -156,7 +175,6 @@ const SignUp :React.FC = () => {
 						placeholder='비밀번호를 다시 입력해주세요.'		
 						value={signUpForm.passwordCheck}	
 						onChange={handleChange}		
-						onBlur={handlePassWordCheckBlur}
 					/>
 					{errors.passwordCheck? <span className={classes.error}>{errors.passwordCheck}</span> : ''}
 				</div>
@@ -171,8 +189,7 @@ const SignUp :React.FC = () => {
 						type='text'
 						placeholder='전화번호를 입력해주세요(예 : 010-1234-5678)'
 						value={signUpForm.phoneNumber}		
-						onChange={handleChange}	
-						onBlur={handlePhoneNumberBlur}		
+						onChange={handleChange}		
 					/>
 					{errors.phoneNumber? <span className={classes.error}>{errors.phoneNumber}</span> : ''}
 				</div>
