@@ -58,6 +58,29 @@ const SignUp :React.FC = () => {
 
 	const navigate = useNavigate();
 
+
+	const CheckDuplicate = async() => {
+		const body = JSON.stringify(signUpForm.email);
+		try{
+			const response = await axios.post('endpoint_url', body, {
+				headers : {
+					'Content-Type' : 'application/json',
+				}
+			});
+			
+			if(!response){
+				setErrors(prev => ({...prev, email : '이메일이 중복되었습니다.'}))
+				//백엔드에 이메일 중복여부를 확인했을 때 중복되었으면 에러 메세지 설정
+				return;
+			}
+			setErrors(prev => ({...prev, email : ''}));
+			
+		}
+		catch(error){
+			console.error("Error occured!");
+		}
+	} //이메일 중복 여부
+
 	const handleSubmit = async (event : React.FormEvent) => {
 		event.preventDefault();
 
@@ -108,7 +131,6 @@ const SignUp :React.FC = () => {
 		}
 
 		const body = JSON.stringify(signUpForm);
-		console.log(body);
 		
 		try{
 			const response = await axios.post('endpoint_url', body, {
@@ -144,12 +166,17 @@ const SignUp :React.FC = () => {
 						ref={emailRef}		
 						id='signup_email'
 						name='email'
-						className={classes.input}
+						className={`${classes.input} ${classes.email}`}
 						type='text'
 						placeholder='아이디 입력 (이메일 형식)'	
 						value={signUpForm.email}	
-						onChange={handleChange}	
+						onChange={handleChange}
 					/>
+					<button className={classes.duplicateCheckButton} onClick={CheckDuplicate}>
+						<h2>이메일 중복확인</h2>
+					</button>
+				
+					
 					{errors.email? <span className={classes.error}>{errors.email}</span> : ''}
 				</div>
 				
