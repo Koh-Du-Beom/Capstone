@@ -1,12 +1,13 @@
 type UUID = string;
 
-interface User{ 
+interface SignUpUser{ 
 	userIdentifier : UUID;
 	email : string;
 	password : string;
-	name : string;
 	phoneNumber : string;
 	isAuthenticated : boolean;
-	isAdministrator : boolean;
+	isDuplicated : boolean;
 	signUpDate : string;
 }
+
+

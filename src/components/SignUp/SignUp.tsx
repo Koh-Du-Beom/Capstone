@@ -71,7 +71,7 @@ const SignUp :React.FC = () => {
 
     if (!isEmailValid) {
 			newErrors.email = '올바른 이메일 형식이 아닙니다.';
-    } 
+    }
 
 		if (!isPasswordValid) {
 			newErrors.password = '올바른 비밀번호 형식이 아닙니다.';
@@ -127,6 +127,11 @@ const SignUp :React.FC = () => {
 		}
 		
 	}
+
+	// 회원가입 시에 이메일 중복
+	// 아이디 옆에 이메일 중복여부 확인하고, 
+	// 정보 입력이 다 끝나면 다음 페이지에 이메일 인증을 하는 모달창 띄우고 
+	// 회원가입 완료처리를 할 수 있게
 
 	return (
 		<form className={classes.outlet_container} onSubmit={handleSubmit}>
