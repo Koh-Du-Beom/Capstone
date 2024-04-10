@@ -5,9 +5,11 @@ interface SignUpUser{
 	email : string;
 	password : string;
 	phoneNumber : string;
-	isAuthenticated : boolean;
-	isDuplicated : boolean;
+	isEmailAuthenticated : boolean;
+	isEmailDuplicated : boolean;
 	signUpDate : string;
 }
+
+export default SignUpUser;
 
 

@@ -17,25 +17,7 @@
 }
 
 .email{
-  width: 60%;
-}
-
-.duplicateCheckButton{
-  width: 40%;
-  height: 50px;
-  background-color: #FFC107;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  
-  cursor: pointer;
-}
-
-.duplicateCheckButton:hover{
-  background-color: #d0b134;
-}
-
-.duplicateCheckButton h2{
-  font-size: 1em;
+  width: 70%;
 }
 
 
@@ -46,6 +28,10 @@
 .content_title{
 	padding: 10px;
 	margin: 0;
+}
+
+.content_box{
+  display: flex;
 }
 
 .message {
