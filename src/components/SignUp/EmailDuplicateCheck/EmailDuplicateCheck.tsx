@@ -1,18 +1,14 @@
 import axios from "axios";
 import classes from './EmailDuplicate.module.css';
 import { useEffect } from "react";
-
+import SignUpUser from '../../../types/SignUpUser.type';
 
 interface EmailProp{
   email : string;
+  setSignUpForm : Function;
 }
 
-const EmailDuplicateCheck:React.FC<EmailProp> = ({ email }) => {
-
-  useEffect(()=>{
-    console.log(email);
-    
-  }, [email]);
+const EmailDuplicateCheck:React.FC<EmailProp> = ({ email, setSignUpForm }) => {
 
   const CheckDuplicate = async(event : React.FormEvent) => {
 		event.preventDefault();
@@ -25,17 +21,16 @@ const EmailDuplicateCheck:React.FC<EmailProp> = ({ email }) => {
 				}
 			});
 			
-			if(!response){
-				
-				return;
-			}
-			
-			
+      if(response){
+        setSignUpForm((prev : SignUpUser) => ({...prev, isEmailDuplicate: false}));
+      }else{
+        setSignUpForm((prev : SignUpUser) => ({...prev, isEmailDuplicate: true}));
+      }
 		}
 		catch(error){
 			console.error("Error occured!");
 		}
-	} //이메일 중복 여부
+	} //이메일 중복여부를 백엔드에 보내서 판단하는 함수
 
   return (
     <form className={classes.container} onSubmit={CheckDuplicate}>

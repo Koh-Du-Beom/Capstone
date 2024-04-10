@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import EmailDuplicateCheck from './EmailDuplicateCheck/EmailDuplicateCheck';
+import SignUpUser from '../../types/SignUpUser.type';
+import EmailAuthentication from './EmailAuthentication/EmailAuthentication';
 
 
 interface ErrorState {
@@ -18,7 +20,7 @@ const SignUp :React.FC = () => {
 	const [signUpForm, setSignUpForm] = useState<SignUpUser>({
     userIdentifier : '',
 		email: '',
-		isEmailDuplicated: true,
+		isEmailDuplicated: false,
 		isEmailAuthenticated: false,
     password: '',
     phoneNumber: '',
@@ -26,8 +28,6 @@ const SignUp :React.FC = () => {
   }); //폼 제출 시 확인사항
 	const [passwordCheck, setPassWordCheck] = useState<string>('');
 
-	const [isEmailChecked, setIsEmailChecked] = useState<boolean>(false);
-	//이메일이 중복되지 않은 지 검사가 완료된 여부를 판단
   const [errors, setErrors] = useState<ErrorState>({}); //에러 메세지
 
 	const emailRef = useRef<HTMLInputElement>(null);
@@ -35,6 +35,9 @@ const SignUp :React.FC = () => {
 	const passwordCheckRef = useRef<HTMLInputElement>(null);
 	const phoneNumberRef = useRef<HTMLInputElement>(null);
 	// 마지막에 제출 시 오류가 있는 부분에 focus를 주기위함.
+
+	const [modalOpen, setModalOpen] = useState<boolean>(true);
+	//이메일 인증하는 모달창 오픈하기. 로직수정필요
 
 	const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -45,7 +48,6 @@ const SignUp :React.FC = () => {
 	const validateEmail = () => {
     return isCorrectEmail(signUpForm.email);
   };
-
 
 	const validatePassWord = () => {
 		return isCorrectPassWord(signUpForm.password);
@@ -59,6 +61,12 @@ const SignUp :React.FC = () => {
 	const validatePhoneNumber = () => {
 		return isCorrectPhoneNumber(signUpForm.phoneNumber);
 	}
+
+	useEffect(()=>{
+		if(signUpForm.isEmailDuplicated){ 
+			setErrors(prev => ({...prev, email : '중복된 이메일입니다.'}));
+		}
+	}, [signUpForm.isEmailDuplicated])
 
 
 	const handleSubmit = async (event : React.FormEvent) => {
@@ -124,11 +132,10 @@ const SignUp :React.FC = () => {
 				}
 			});
 			
-			navigate('/login'); // 성공 시 방 선택 페이지로 redirection
+			
 		}
 		catch(error){
 			console.log("Login failed : ", error);
-			navigate('/login')
 			//추가 기능 구현
 		}
 		
@@ -225,6 +232,8 @@ const SignUp :React.FC = () => {
 				<a className={classes.link_login} onClick={()=>navigate('/login')}>이미 아이디가 있으신가요?</a>
 			</div>
 			
+{/* 
+			{modalOpen ? <EmailAuthentication/> : ''} */}
 		</form>
 	)
 };
