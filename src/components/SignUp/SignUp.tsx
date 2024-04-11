@@ -18,10 +18,9 @@ interface ErrorState {
 const SignUp :React.FC = () => {
 	const navigate = useNavigate();
 	const [signUpForm, setSignUpForm] = useState<SignUpUser>({
-    userIdentifier : '',
 		email: '',
 		isEmailDuplicated: false,
-		isEmailAuthenticated: false,
+		authenticateCode: '',
     password: '',
     phoneNumber: '',
 		signUpDate : '',
@@ -36,8 +35,10 @@ const SignUp :React.FC = () => {
 	const phoneNumberRef = useRef<HTMLInputElement>(null);
 	// 마지막에 제출 시 오류가 있는 부분에 focus를 주기위함.
 
-	const [modalOpen, setModalOpen] = useState<boolean>(true);
-	//이메일 인증하는 모달창 오픈하기. 로직수정필요
+	const [modalOpen, setModalOpen] = useState<boolean>(false);
+	const toggleModal = () => {
+		setModalOpen(!modalOpen);
+	}
 
 	const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -66,12 +67,9 @@ const SignUp :React.FC = () => {
 		if(signUpForm.isEmailDuplicated){ 
 			setErrors(prev => ({...prev, email : '중복된 이메일입니다.'}));
 		}
-	}, [signUpForm.isEmailDuplicated])
+	}, [signUpForm.isEmailDuplicated]);
 
-
-	const handleSubmit = async (event : React.FormEvent) => {
-		event.preventDefault();
-
+	const handleSignUp = () => {
 		const newErrors : ErrorState = {};
 
 		// 각 입력 필드의 유효성 검사 함수 실행
@@ -118,38 +116,20 @@ const SignUp :React.FC = () => {
 			return;
 		}
 
-		if(!signUpForm.isEmailDuplicated){
+		if(signUpForm.isEmailDuplicated){
 			return;
 		} //이메일이 중복되었으면 가입을 막음.
-
-		const body = JSON.stringify(signUpForm);
 		
-		try{
-			const response = await axios.post('endpoint_url', body, {
-				headers : {
-					'Content-Type' : 'application/json',
-					'Authorization' : 'Bearer ${}'
-				}
-			});
-			
-			
-		}
-		catch(error){
-			console.log("Login failed : ", error);
-			//추가 기능 구현
-		}
+
+		
+		//이메일 인증코드 발송하는 로직
+
+		toggleModal();
 		
 	}
 
-	// 회원가입 시에 이메일 중복
-	// 아이디 옆에 이메일 중복여부 확인하고, 
-	// 정보 입력이 다 끝나면 다음 페이지에 이메일 인증을 하는 모달창 띄우고 
-	// 회원가입 완료처리를 할 수 있게
-
-
-
 	return (
-		<form className={classes.outlet_container} onSubmit={handleSubmit}>
+		<div className={classes.outlet_container}>
 			<h1 className={classes.big_title}>회원가입</h1>
 			
 			<div className={classes.contents}>
@@ -224,7 +204,7 @@ const SignUp :React.FC = () => {
 			
 			<button 
 				className={classes.signUp_button}
-				onClick={() => {}}
+				onClick={handleSignUp}
 			>
 				이메일 인증하기
 			</button>
@@ -232,9 +212,9 @@ const SignUp :React.FC = () => {
 				<a className={classes.link_login} onClick={()=>navigate('/login')}>이미 아이디가 있으신가요?</a>
 			</div>
 			
-{/* 
-			{modalOpen ? <EmailAuthentication/> : ''} */}
-		</form>
+
+			{ modalOpen ? <EmailAuthentication toggleModal={toggleModal} signUpData={signUpForm}/> : ''}
+		</div>
 	)
 };
 

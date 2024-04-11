@@ -33,11 +33,11 @@ const EmailDuplicateCheck:React.FC<EmailProp> = ({ email, setSignUpForm }) => {
 	} //이메일 중복여부를 백엔드에 보내서 판단하는 함수
 
   return (
-    <form className={classes.container} onSubmit={CheckDuplicate}>
+    <div className={classes.container} onSubmit={CheckDuplicate}>
       <button className={classes.duplicateCheckButton}>
         <h2>이메일 중복확인</h2>
       </button>
-    </form>
+    </div>
     
   )
 }

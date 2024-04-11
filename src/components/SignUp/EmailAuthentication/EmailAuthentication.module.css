@@ -17,3 +17,82 @@
 	border-radius: 10px;
 }
 
+.close_button_container{
+	text-align: right;
+}
+
+.close_button {
+	display: inline-block;
+	display: inline;
+	height: 30px;
+	width: 30px;
+	background-color: transparent;
+	outline: transparent;
+	border: 2px solid transparent;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.close_button:hover{
+	background-color: black;
+	color: white;
+}
+
+.close_button:after {
+	display: inline-block;
+	content: "\00d7"; 
+}
+
+.title{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.big_title{
+
+}
+
+.small_title{
+
+}
+
+.authCodeWrapper{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.timer{
+	color: #DC3545;
+}
+
+.authenticate_button {
+  padding: 15px 30px;
+  background-color: #fad312; 
+  color: #191919;
+  border: none;
+  border-radius: 5px; 
+  margin: 20px 0;
+  cursor: pointer; 
+  width: 100%; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .2); /* 버튼에 그림자 효과 추가 */
+}
+
+.authenticate_button:hover{
+	background-color: #d0b134;
+}
+
+.input {
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #f0f0f0;
+  outline: none;
+  width: 100%;
+	height: 50px;
+  margin: 10px 0;
+	font-size: 1.2em;
+}
+
+
+
