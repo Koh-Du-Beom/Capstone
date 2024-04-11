@@ -5,13 +5,17 @@ import classes from './style.module.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginError from './LoginError/LoginError';
+import Loading from '../Loading/Loading';
 
 const Login : React.FC = () => {
 	const [focused, setFocused] = useState<string | null>(null);
-	const [email, setEmail] = useState<string>();
-	const [passWord, setPassWord] = useState<string>();
+	const [email, setEmail] = useState<string>('');
+	const [passWord, setPassWord] = useState<string>('');
 	const [isLoginError, setIsLoginError] = useState<boolean>(false);
  
+	const [isLoading, setIsLoading] = useState<boolean>(false); //redux로 나중에 뺄듯.
+	
+
 	const navigate = useNavigate();
 
 	const handleFocus = (id: string) => {
@@ -25,7 +29,7 @@ const Login : React.FC = () => {
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 		const body = JSON.stringify({ email, passWord });	
-		
+		setIsLoading(true);
 		try {
 			const response = await axios.post('endPoint_url', body, {
 				headers : {
@@ -45,7 +49,9 @@ const Login : React.FC = () => {
 		}catch(error){
 			console.log("Login failed : ", error);
 			setIsLoginError(true);
-			navigate('/roomSelect'); // 일단은 추가해뒀는데, 원래는 되면 안됨.
+
+		}finally{
+			setIsLoading(false);
 		}
 		
 	}
@@ -77,6 +83,8 @@ const Login : React.FC = () => {
 				/>
 			</div>
 			
+			{isLoading ? <Loading/> : null }
+
 			<Divider/>
 
 			{isLoginError ? <LoginError/> : null }
