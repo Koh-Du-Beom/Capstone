@@ -4,7 +4,7 @@ interface SignUpUser{
 	email : string;
 	password : string;
 	phoneNumber : string;
-	isEmailAuthenticated : boolean;
+	authenticateCode : string;
 	isEmailDuplicated : boolean;
 	signUpDate : string;
 }

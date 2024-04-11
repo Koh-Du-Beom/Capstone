@@ -3,13 +3,29 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+	width: 100%;
   margin-top: 20px;
+}
+
+.userName{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	margin: 0;
+}
+
+.input {
+  padding: 10px;
+  border: none;
+  outline: none;
+	height: 50px;
+  margin: 10px 0;
+	width: 80%;
 }
 
 .connectionInfo {
   border-top: 2px solid #ddd;
   padding-top: 20px;
-  margin-top: 20px;
 }
 
 .deviceSelector {
@@ -20,7 +36,7 @@
   background-color: #f9f9f9;
   border: 2px solid #ccc;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: 14px;
 	cursor: pointer;
 }
 

@@ -1,11 +1,21 @@
 import { useEffect, useState } from 'react';
 import classes from './DeviceCheck.module.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../../store/store'; // 경로는 실제 구조에 맞게 조정하세요.
+import { updateConnectionInfo } from '../../../store/connectionSlice'; // 경로는 실제 구조에 맞게 조정하세요.
 
 const DeviceCheck: React.FC = () => {
 	const [videoDevices, setVideoDevices] = useState<MediaDeviceInfo[]>([]);
 	const [audioDevices, setAudioDevices] = useState<MediaDeviceInfo[]>([]);
+	
+	const [userName, setUserName] = useState<string>('');
+	const [onFocus, setOnFocus] = useState<boolean>(false);
+	//blur 이벤트가 발생했을 때만 redux변수 업데이트해주기 위함.
 	const [selectedVideoDevice, setSelectedVideoDevice] = useState<string>('');
 	const [selectedAudioDevice, setSelectedAudioDevice] = useState<string>('');
+	
+	const dispatch = useDispatch();
+	const connectionInfo = useSelector((state : RootState) => state.connectionInfo);
 
 	useEffect(() => {
 		const getDevices = async () => {
@@ -15,8 +25,8 @@ const DeviceCheck: React.FC = () => {
 				
 				// 권한을 얻은 후에는 사용하지 않는 트랙을 바로 중지합니다.
 				stream.getTracks().forEach(track => track.stop());
-
 				const devices = await navigator.mediaDevices.enumerateDevices();
+				
 				setVideoDevices(devices.filter(device => device.kind === 'videoinput'));
 				setAudioDevices(devices.filter(device => device.kind === 'audioinput'));
 			} catch (error) {
@@ -35,12 +45,48 @@ const DeviceCheck: React.FC = () => {
 		setSelectedAudioDevice(event.target.value);
 	};
 
+	const getVideoLabel = (deviceId : string) => {
+		const device = videoDevices.find(device => device.deviceId === deviceId);
+		return device ? device.label : '';
+	};
+
+	const getAudioLabel = (deviceId : string) => {
+		const device = audioDevices.find(device => device.deviceId === deviceId);
+		return device ? device.label : '';
+	}
+
+	useEffect(()=>{
+		if(!onFocus){
+			const video = getVideoLabel(selectedVideoDevice);
+			const audio = getAudioLabel(selectedAudioDevice);
+			dispatch(updateConnectionInfo({
+				userName : userName,
+				videoDevice : video,
+				audioDevice : audio,
+			}))
+		}
+		
+	}, [selectedAudioDevice, selectedVideoDevice]);
+
 	return (
 		<div className={classes.wrapper}>
-			<div>유저정보</div>
+			<div className={classes.userName}>	
+					유저 이름 : 
+					<input 
+						id='userName'
+						className={classes.input}
+						type='text'
+						placeholder='방 참여 시 이 이름으로 보이게 됩니다.'
+						value={userName}
+						onChange={(e) => setUserName(e.target.value)}
+						onFocus={()=>setOnFocus(true)}
+						onBlur={()=>setOnFocus(false)}
+					/>
+			</div>
 			<div className={classes.connectionInfo}>
 				{/* Video device selector */}
 				<select value={selectedVideoDevice} onChange={handleVideoDeviceChange} className={classes.deviceSelector}>
+					<option value=''>비디오 연결기기를 선택해주세요</option>
 					{videoDevices.map(device => (
 						<option key={device.deviceId} value={device.deviceId}>
 							{device.label || 'Unknown Video Device'}
@@ -50,6 +96,7 @@ const DeviceCheck: React.FC = () => {
 
 				{/* Audio device selector */}
 				<select value={selectedAudioDevice} onChange={handleAudioDeviceChange} className={classes.deviceSelector}>
+					<option value=''>오디오 연결기기를 선택해주세요</option>
 					{audioDevices.map(device => (
 						<option key={device.deviceId} value={device.deviceId}>
 							{device.label || 'Unknown Audio Device'}
