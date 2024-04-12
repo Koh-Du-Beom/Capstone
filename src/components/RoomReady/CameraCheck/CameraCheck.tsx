@@ -9,7 +9,7 @@ const CameraCheck: React.FC = () => {
 	useEffect(() => {
 		if (videoDevice) {
 			const constraints = {
-				video: { deviceId: { exact: videoDevice } }
+				video: { deviceId: { exact: videoDevice } },
 			};
 
 			navigator.mediaDevices.getUserMedia(constraints)

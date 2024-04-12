@@ -1,0 +1,10 @@
+
+.contents{
+	display: flex;
+  align-items: center;
+  justify-content: center;
+	margin-top: 5vw; 
+	/* margin은 조정필요 */
+	padding: 3vw;
+}
+

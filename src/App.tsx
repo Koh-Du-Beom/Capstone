@@ -7,6 +7,7 @@ import UserInfoLayout from './layouts/UserInfoLayout/UserInfoLayout';
 import SignUpPage from './pages/SignUpPage';
 import StartingPage from './pages/StartingPage';
 import RoomReadyPage from './pages/RoomReadyPage';
+import MainLayout from './layouts/MainLayout/MainLayout';
 
 const router = createBrowserRouter([
 	{
@@ -26,16 +27,26 @@ const router = createBrowserRouter([
 
 			//다른 레이아웃에 놓아야할 것들
 
-			{
-				path: '/roomSelect',
-				element: <RoomSelectPage/>
-			},
+			
 		]
 	},
 	{
-		path: 'roomReady',
-		element: <RoomReadyPage/>
-	}
+		path : '/main',
+		element : <MainLayout />,
+		children : [
+			{
+				path: 'roomSelect',
+				element: <RoomSelectPage/>
+			},
+			{
+				path: 'roomReady',
+				element: <RoomReadyPage/>
+			}
+		]
+		
+	},
+
+	
 	
 ])
 

@@ -31,13 +31,13 @@ const RoomSelector: React.FC = () => {
 				}
 			});
 
-			navigate('/roomReady');
+			navigate('/main/roomReady');
 			console.log(response);
 			
 		}catch(error){
 			console.error("Failed to create room: ", error);
 			//일단은 클릭만해도 roomReady로 이동하게 해뒀지만, roomReady로 이동하는 로직을 막아둬야할 필요는 있음.
-			navigate('/roomReady');
+			navigate('/main/roomReady');
 		}
 	}
 

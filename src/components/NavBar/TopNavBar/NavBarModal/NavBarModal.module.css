@@ -1,0 +1,102 @@
+/* NavBarModal.module.css 파일 내용 */
+.modalBackdrop {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+.modalContent {
+	position: fixed;
+  top: 0; 
+  right: 0; 
+	width: 70vw;
+	height: 100%;
+	background-color: white;
+	z-index: 1001;
+}
+
+.logo{
+	width: 60px;
+	height: auto;
+	vertical-align: middle;
+
+}
+
+.bigTitle{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 60px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.contents{
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.closeButton{
+	background-color: white;
+	border: 1px solid transparent;
+	cursor: pointer;
+	width: 40px;
+	height: 40px;
+	margin-right: 1vw;
+	position: relative;
+}
+
+.closeButton img {
+  transition: opacity 0.5s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.content {
+  position: relative; /* 가상 요소의 포지셔닝 기준점 설정 */
+  border-bottom: 1px solid black;
+  color: #333D4B;
+  margin: 15px;
+  padding-bottom: 15px;
+  overflow: hidden; /* 가상 요소가 컨텐츠 영역을 벗어나지 않게 함 */
+	z-index: 1;
+	cursor: pointer;
+}
+
+.content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%; /* 가상 요소를 왼쪽으로 완전히 숨김 */
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0; /* hover 시 나타날 배경색 */
+  transition: left 0.2s ease; /* 왼쪽으로 이동하는 효과를 부드럽게 만듦 */
+	z-index: -1;
+}
+
+.content:hover::before {
+  left: 0; /* hover 시 가상 요소를 왼쪽에서 오른쪽으로 이동시켜 배경색 변경 효과 생성 */
+}
+
+
+.modalEnter{
+	opacity: 0;
+	transform: translateX(100%);
+	transition: opacity 0.3s ease transform 0.4 ease;
+}
+
+.modalActive{
+	opacity: 1;
+	transform: translateX(0);
+	transition: opacity 0.3s ease, transform 0.4s ease;
+}
