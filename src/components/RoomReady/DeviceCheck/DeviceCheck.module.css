@@ -12,20 +12,32 @@
 	align-items: center;
 	justify-content: flex-start;
 	margin: 0;
-}
-
-.input {
-  padding: 10px;
-  border: none;
-  outline: none;
+  background-color: #f9f9f9;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+	width: 100%;
 	height: 50px;
-  margin: 10px 0;
-	width: 80%;
+	padding: 10px;
+	outline: none;
+	font-size: 14px;
 }
 
-.connectionInfo {
+
+.connectionInfos {
   border-top: 2px solid #ddd;
   padding-top: 20px;
+}
+
+.connectionInfo{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.icon{
+	width: 25px;
+	height: 25px;
+	margin-right: 10px;
 }
 
 .deviceSelector {

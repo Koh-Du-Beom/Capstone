@@ -13,7 +13,6 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	position: relative;
 	margin: 20px;
 }
 
@@ -29,4 +28,19 @@
 
 .joinSessionButton:hover{
 	background-color: #d0b134;
+}
+
+
+.videoContainer {
+  width: 100%;
+  max-width: 600px; 
+  margin: 0; 
+  background-color: #000; 
+  border-radius: 10px; 
+  overflow: hidden; 
+}
+
+.videoContainer video {
+  width: 100%; 
+  height: auto; 
 }

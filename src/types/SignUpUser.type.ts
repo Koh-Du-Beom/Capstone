@@ -1,4 +1,4 @@
-type UUID = string;
+
 
 interface SignUpUser{ 
 	email : string;

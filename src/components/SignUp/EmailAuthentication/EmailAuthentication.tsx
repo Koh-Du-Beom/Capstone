@@ -18,8 +18,15 @@ const EmailAuthentication: React.FC<AuthenticationProps> = ({ toggleModal, signU
 	const modalRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-    const timer = timeLeft > 0 && setInterval(() => setTimeLeft(timeLeft - 1), 1000);
-    return () => clearInterval(timer);
+		let timer: ReturnType<typeof setInterval> | null = null;
+  
+		if (timeLeft > 0) {
+			timer = setInterval(() => setTimeLeft(timeLeft - 1), 1000);
+		}
+	
+		return () => {
+			if (timer) clearInterval(timer); // timer가 null이 아니면 clearInterval 호출
+		};
   }, [timeLeft]);
 
 
@@ -39,8 +46,6 @@ const EmailAuthentication: React.FC<AuthenticationProps> = ({ toggleModal, signU
 		event.preventDefault();
 		
 		const signUpDate = new Date().toISOString();
-
-	
 
 		const finalSignUpData = {
 			...signUpData,
@@ -71,7 +76,7 @@ const EmailAuthentication: React.FC<AuthenticationProps> = ({ toggleModal, signU
   return (
     <form className={classes.modalOverlay} onSubmit={completeSignUp}>
 			
-      <div className={classes.modalContent} ref={modalRef}>
+      <div className={classes.modalContent} onClick={e => e.stopPropagation()} ref={modalRef}>
 				<div className={classes.close_button_container}>
 					<button className={classes.close_button} onClick={toggleModal}></button>
 				</div>

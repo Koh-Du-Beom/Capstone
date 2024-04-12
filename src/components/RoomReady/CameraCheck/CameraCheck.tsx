@@ -1,44 +1,36 @@
-import { useEffect, useRef, useState } from "react";
-import { getWebCamera, Styles } from "./getWebCamera";
+import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store'; // 경로는 실제 구조에 맞게 조정하세요.
 
 const CameraCheck: React.FC = () => {
-	const [playing, setPlaying] = useState<boolean>(false);
 	const videoRef = useRef<HTMLVideoElement>(null);
-	
-	useEffect(() => {
-    getWebCamera((stream: MediaStream) => {
-      if (videoRef.current) {
-        setPlaying(true);
-        videoRef.current.srcObject = stream;
-      }
-    });
-  }, []);
+	const { videoDevice } = useSelector((state: RootState) => state.connectionInfo);
 
-	const startOrStop = () => {
-    if (playing && videoRef.current) {
-      const s = videoRef.current.srcObject as MediaStream;
-      s.getTracks().forEach((track : MediaStreamTrack) => {
-        track.stop();
-      });
-    } else {
-      getWebCamera((stream => {
-				if (videoRef.current) {
-          setPlaying(true);
-          videoRef.current.srcObject = stream;
-        }
-      }));
-    }
-    setPlaying(!playing);
-  }
+	useEffect(() => {
+		if (videoDevice) {
+			const constraints = {
+				video: { deviceId: { exact: videoDevice } }
+			};
+
+			navigator.mediaDevices.getUserMedia(constraints)
+				.then(stream => {
+					if (videoRef.current) {
+						videoRef.current.srcObject = stream;
+					}
+				})
+				.catch(error => {
+						console.error('Error accessing the camera.', error);
+				});
+		}
+	}, [videoDevice]);
 
 	return (
-		<>
-			<div>
-				<video ref={videoRef} autoPlay style={Styles.Video} />
-				<button onClick={() => startOrStop()}>{playing ? 'Stop' : 'Start'} </button>
-			</div>
-		</>
+			<>
+				<div>
+					<video ref={videoRef} autoPlay playsInline muted></video>
+				</div>
+			</>
 	);
-};
+}
 
 export default CameraCheck;
